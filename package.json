@@ -29,5 +29,9 @@
   "bugs": {
     "url": "https://github.com/ahmed-hamdy90/Vending-machine-task/issues"
   },
-  "homepage": "https://github.com/ahmed-hamdy90/Vending-machine-task#readme"
+  "homepage": "https://github.com/ahmed-hamdy90/Vending-machine-task#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "redis": "^5.6.0"
+  }
 }
