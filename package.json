@@ -32,6 +32,7 @@
   "homepage": "https://github.com/ahmed-hamdy90/Vending-machine-task#readme",
   "dependencies": {
     "express": "^5.1.0",
+    "mongoose": "^8.16.4",
     "redis": "^5.6.0"
   }
 }
