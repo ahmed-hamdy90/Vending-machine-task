@@ -2,10 +2,9 @@
     'use strict';
 
     /**
-     * Represent Custom Exception Class for NotImplement method/function like Java alike,
-     * @link {https://commons.apache.org/proper/commons-lang/javadocs/api-3.4/org/apache/commons/lang3/NotImplementedException.html}
+     * Represent Custom Error Class for any Invalid Parameter Passing to method/class.
      */
-    class NotImplementError extends Error {
+    class InvalidParameterError extends Error {
 
         /**
          * It's standard practice to set the 'name' property to the class name.
@@ -27,7 +26,7 @@
             // Pass the message to the parent Error class constructor.
             super(message);
 
-            this.name = 'NotImplementError';
+            this.name = 'InvalidParameterError';
             this.field = field;
 
             /**
@@ -35,10 +34,10 @@
              * This helps in creating a cleaner stack trace by omitting the constructor call from it.
              */
             if (Error.captureStackTrace) {
-                Error.captureStackTrace(this, NotImplementError);
+                Error.captureStackTrace(this, InvalidParameterError);
             }
         }
     }
 
-    module.exports = NotImplementError;
+    module.exports = InvalidParameterError;
 })();

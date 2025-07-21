@@ -2,9 +2,9 @@
     'use strict';
 
     /**
-     * Represent Custom Exception Class for any User not exists
+     * Represent Custom Error Class for any Product not exists.
      */
-    class NotFoundUserError extends Error {
+    class NotFoundProductError extends Error {
 
         /**
          * It's standard practice to set the 'name' property to the class name.
@@ -26,7 +26,7 @@
             // Pass the message to the parent Error class constructor.
             super(message);
 
-            this.name = 'NotFoundUserError';
+            this.name = 'NotFoundProductError';
             this.field = field;
 
             /**
@@ -34,10 +34,10 @@
              * This helps in creating a cleaner stack trace by omitting the constructor call from it.
              */
             if (Error.captureStackTrace) {
-                Error.captureStackTrace(this, NotFoundUserError);
+                Error.captureStackTrace(this, NotFoundProductError);
             }
         }
     }
 
-    module.exports = NotFoundUserError;
+    module.exports = NotFoundProductError;
 })();

@@ -7,7 +7,7 @@
 
     // load modules
     const mongoose = require('mongoose');
-    const InvalidParameterError = require('../../Exceptions/invalidParameterError');
+    const InvalidParameterError = require('../../Errors/invalidParameterError');
 
     /**
      * MongoDb adapter class who responsible for any Db operations

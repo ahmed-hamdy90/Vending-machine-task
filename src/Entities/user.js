@@ -4,7 +4,7 @@
     // load modules
     const AvailbleUserRule = require('./rules');
     const BasicEntity = require('./basicEntity');
-    const InvalidParameterError = require('../Exceptions/invalidParameterError');
+    const InvalidParameterError = require('../Errors/invalidParameterError');
 
     /**
      * Represent Domian Entity for User who use Vending Machine

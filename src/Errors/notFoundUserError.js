@@ -2,9 +2,9 @@
     'use strict';
 
     /**
-     * Represent Custom Exception Class for any Invalid Parameter Passing to method/class.
+     * Represent Custom Error Class for any User not exists
      */
-    class InvalidParameterError extends Error {
+    class NotFoundUserError extends Error {
 
         /**
          * It's standard practice to set the 'name' property to the class name.
@@ -26,7 +26,7 @@
             // Pass the message to the parent Error class constructor.
             super(message);
 
-            this.name = 'InvalidParameterError';
+            this.name = 'NotFoundUserError';
             this.field = field;
 
             /**
@@ -34,10 +34,10 @@
              * This helps in creating a cleaner stack trace by omitting the constructor call from it.
              */
             if (Error.captureStackTrace) {
-                Error.captureStackTrace(this, InvalidParameterError);
+                Error.captureStackTrace(this, NotFoundUserError);
             }
         }
     }
 
-    module.exports = InvalidParameterError;
+    module.exports = NotFoundUserError;
 })();

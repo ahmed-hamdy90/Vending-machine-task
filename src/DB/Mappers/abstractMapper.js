@@ -2,7 +2,7 @@
     'use strict';
 
     // load modules
-    const NotImplementError  = require('../../Exceptions/notImplementError');
+    const NotImplementError  = require('../../Errors/notImplementError');
     const BasicEntity = require('../../Entities/basicEntity');
 
     /**
