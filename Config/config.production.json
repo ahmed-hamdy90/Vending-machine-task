@@ -1,7 +1,8 @@
 {
-  "app": {
+  "api": {
     "port": 0,
-    "host": ""
+    "host": "",
+    "version": 1
   },
   "databaseConfig": {
     "MongoDb": {
@@ -14,5 +15,8 @@
         "port": "",
         "database": ""
     }
+  },
+  "auth" : {
+    "secret": ""
   }
 }
