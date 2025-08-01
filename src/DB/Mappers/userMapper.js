@@ -5,6 +5,7 @@
     const AbstractMapper = require('./abstractMapper');
     const UserModel = require('../MongoModels/user.model');
     const UserEntity = require('../../Entities/user');
+    const EncryptionService = require('../../Services/encryptionService');
     
     /**
      * User Mapper class for any User Entity-Model Relation
@@ -12,11 +13,25 @@
     class UserMapper extends AbstractMapper {
 
         /**
+         * @type {EncryptionService}
+         */
+        encryptionService;
+
+        /**
+         * UserMapper Constructor
+         * @param {EncryptionService} encryptionService Encryption service instance
+         */
+        constructor(encryptionService) {
+            super();
+            this.encryptionService = encryptionService;
+        }
+
+        /**
          * {@inheritdoc}
          * @returns {UserEntity | null} Hydrated User instance
          */
         toEntity(data) {
-            if (!data) {
+            if (!data || typeof data !== 'object') {
                 return null;
             }
 
@@ -54,12 +69,12 @@
             if (presistanceData == null)
                 return null;
 
-            // TODO: Inject Encrypt Service to Hashing any password
-            presistanceData.password = password;
+            presistanceData.password =
+                this.encryptionService.generateMd5HashString(password);
 
             return presistanceData;
         }
     }
 
-    module.exports = new UserMapper();
+    module.exports = new UserMapper(EncryptionService);
 })();
