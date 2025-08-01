@@ -63,8 +63,9 @@
                 .then(result => successCallback(result))
                 .catch(error => {
                     // TODO: integrate with Custom Logger
-                    errorCallback(error)}
-                );
+                    console.error(error);
+                    errorCallback(error)
+                });
         }
 
         /**
@@ -78,8 +79,9 @@
                 .then(result => successCallback(result))
                 .catch(error => {
                     // TODO: integrate with Custom Logger
-                    errorCallback(error)}
-                );
+                    console.error(error);
+                    errorCallback(error)
+                });
         }
 
         /**
@@ -94,16 +96,16 @@
             if (criteria === undefined || typeof criteria !== "object") {
                 errorCallback(
                     new InvalidParameterError('Invalid given criteria to search with'));
-                // TODO: integrate with Custom Logger
                 return;
             }
-            
+
             model.find(criteria)
                 .then(result => successCallback(result))
                 .catch(error => {
                     // TODO: integrate with Custom Logger
-                    errorCallback(error)}
-                );
+                    console.error(error);
+                    errorCallback(error)
+                });
         }
 
         /**
@@ -117,7 +119,6 @@
         updateByCriteria(model, criteria, updateData, successCallback, errorCallback) {
             // must given criteria as object
             if (criteria === undefined || typeof criteria !== "object") {
-                // TODO: integrate with Custom Logger
                 errorCallback(
                     new InvalidParameterError('Invalid given criteria to search with'));
                 return;
@@ -135,12 +136,15 @@
                 return;
             }
             
-            model.updateOne(criteria, updateData)
+            model
+                .findOne(criteria)
+                .updateOne(updateData)
                 .then(result => successCallback(result))
                 .catch(error => {
                     // TODO: integrate with Custom Logger
-                    errorCallback(error)}
-                );
+                    console.error(error);
+                    errorCallback(error)
+                });
         }
 
         /**
@@ -155,7 +159,6 @@
             if (criteria === undefined || typeof criteria !== "object") {
                 errorCallback(
                     new InvalidParameterError('Invalid given criteria to search with'));
-                // TODO: integrate with Custom Logger
                 return;
             }
             
@@ -163,8 +166,26 @@
                 .then(result => successCallback(result))
                 .catch(error => {
                     // TODO: integrate with Custom Logger
-                    errorCallback(error)}
-                );
+                    console.error(error);
+                    errorCallback(error)
+                });
+        }
+
+        /**
+         * Retrieve the Last Stored Document exists on Collection
+         * @param {*} model model instance which represent collection
+         * @param {function} successCallback success callback function will called on process done successfully
+         * @param {function} errorCallback error callback function will called on process failed
+         */
+        getLastStoredDocument(model, successCallback, errorCallback) {
+            model.findOne()
+                .sort({_id: -1})
+                .then(result => successCallback(result))
+                .catch(error => {
+                    // TODO: integrate with Custom Logger
+                    console.error(error);
+                    errorCallback(error)
+                });
         }
     }
 
