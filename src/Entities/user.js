@@ -46,6 +46,7 @@
         /**
          * Setter for User's rule
          * @param {int} rule given rule for this user
+         * @throws {InvalidParameterError} In case Given User Rule Invalid
          */
         setUserRule(rule) {
             if (rule !== AvailbleUserRule.BUYER && rule !== AvailbleUserRule.SALLER) {
