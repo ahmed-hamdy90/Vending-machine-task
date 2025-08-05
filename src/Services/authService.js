@@ -84,9 +84,6 @@
         login(username, password, successCallback, errorCallback) {
             // First check given Username exists
             this.userService.getAll(
-                {username: username},
-                0,
-                1, 
                 (users) => {
                     if (!users || users.length == 0) {
                         errorCallback(new NotFoundUserError('User Not Exists'));
@@ -150,7 +147,10 @@
                     // TODO: Replace with Custom Logger
                     console.error(error);
                     errorCallback(error);
-                }
+                },
+                {username: username},
+                0,
+                1
             );
         }
 

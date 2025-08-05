@@ -8,6 +8,7 @@
     const UserModel = require('../DB/MongoModels/user.model');
     const UserEntity = require('../Entities/user');
     const AvailbleUserRule = require('../Entities/rules');
+
     const NotFoundUserError = require('../Errors/notFoundUserError');
     const StringUtls = require('../Utils/StringUtls');
 
@@ -66,7 +67,7 @@
         /**
          * {@inheritdoc}
          */
-        getAll(criteria = {}, offset = 0, limit = 20, successCallback, errorCallback) {
+        getAll(successCallback, errorCallback, criteria = {}, offset = 0, limit = 20) {
             // TODO: make make offset and limit condition
             this.mongoDbAdapter.findByCriteria(
                 this.userMongoModel,
@@ -80,7 +81,7 @@
 
                     result.forEach(userData => {
                         resultAsEntities.push(this.userMapper.toEntity(userData));
-                    })
+                    });
 
                     successCallback(resultAsEntities);
                 },
@@ -174,6 +175,11 @@
                         (updateEntity.hasOwnProperty('rule') && !isNaN(Number(updateEntity.rule)))
                             ? updateEntity.rule : user.rule;
 
+                    /**
+                     * TODO: Later we neet to check if User's rule Can be updated ot not
+                     * As on the future will face problem if convert User from Saller Rule To Buyer Rule
+                     * Then make problem on Stored Products Owns by him, this make products invalid and immutable.
+                     */
                     let updatedUserEntity;
                     try {
                         updatedUserEntity =

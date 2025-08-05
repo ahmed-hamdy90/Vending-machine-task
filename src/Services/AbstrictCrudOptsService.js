@@ -33,13 +33,13 @@
 
         /**
          * Getting all available list of Entity based on Given Criteria
+         * @param {function} successCallback success callback function will called on process done successfully
+         * @param {function} errorCallback error callback function will called on process failed
          * @param {Object} criteria filtering criteria need to apply on listing entities
          * @param {int} offset the beginning number will begin listing entities from it
          * @param {int} limit the maximum total number of entities will return
-         * @param {function} successCallback success callback function will called on process done successfully
-         * @param {function} errorCallback error callback function will called on process failed
          */
-        getAll(criteria = {}, offset = 0, limit = 20, successCallback, errorCallback) {
+        getAll(successCallback, errorCallback, criteria = {}, offset = 0, limit = 20) {
             throw new NotImplementError("Method 'getAll()' must be implemented.");
         }
 
