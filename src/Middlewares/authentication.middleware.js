@@ -10,9 +10,7 @@
         const authToken = req.header('Authorization');
 
         if (StringUtls.isEmptyString(authToken) || !String(authToken).startsWith('Bearer')) {
-            res.status(401)
-             .json({message: 'No token, authorization denied'});
-
+            res.status(401).json({message: 'No token, authorization denied'});
             return;
         }
 
@@ -24,7 +22,7 @@
             givenJwtToken,
             (decodedToken) => {
                 if (!decodedToken) {
-                    res.status(401).json({message: 'Token is not valid'});
+                    res.status(401).json({message: 'Token is Not Valid'});
                     return;
                 }
 
@@ -32,9 +30,9 @@
                 next();
             },
             (error) => {
-                // TODO: Custom Logger
+                // TODO: Replace with Custom Logger
                 console.error(error);
-                res.status(401).json({message: 'Token is not valid'});
+                res.status(401).json({message: 'Token is Not Valid'});
             }
         );
     };
