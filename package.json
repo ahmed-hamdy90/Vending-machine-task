@@ -26,7 +26,7 @@
   "author": "Ahmed Hamdy <ahmedhamdy20@gmail.com>",
   "license": "BSD-2-Clause",
   "engines": {
-    "node": "22.12.0"
+    "node": "22.x"
   },
   "bugs": {
     "url": "https://github.com/ahmed-hamdy90/Vending-machine-task/issues"
