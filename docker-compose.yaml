@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  db:
+    image: mongo:8
+    container_name: mongodb
+    ports:
+    - "27017:27017"
+    networks:
+      - app-network
+  app:
+    container_name: nodeapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+networks:
+  app-network:
+    driver: bridge
