@@ -12,6 +12,7 @@
     const MongoDbAdapter = require('../DB/Adapters/mongoDbAdapter');
     const UserModel = require('../DB/MongoModels/user.model');
     const UserEntity = require('../Entities/user');
+
     const InvalidParameterError = require('../Errors/invalidParameterError');
     const NotFoundUserError = require('../Errors/notFoundUserError');
 
@@ -172,7 +173,36 @@
                 return;
             }
 
-            successCallback(decodedToken);
+            /**
+             * @type {null|{id: int, rule: int}}
+             */
+            const authorizedUser = (decodedToken) ? decodedToken.user : undefined;
+            if (authorizedUser) {
+                // Make sure Given Token is still User exists
+                this.userService
+                    .get(
+                        Number(authorizedUser.id),
+                        (result) => {
+                            if (!result) {
+                                errorCallback(new NotFoundUserError('Expired Token As User had been Removed'));
+                                return;
+                            }
+                            /**
+                             * @type {UserEntity}
+                             */
+                            const user = result;
+                            if (user.getUserRule() !== Number(authorizedUser.rule)) {
+                                errorCallback(new Error('Expired Token As store Rule is not Correct'));
+                                return;
+                            }
+
+                            successCallback(decodedToken);
+                        },
+                        error => errorCallback(error)
+                    );
+            } else {
+                errorCallback(new NotFoundUserError('Expired Token As Invalid User details'));
+            }
         }
     }
 
