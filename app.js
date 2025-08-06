@@ -13,6 +13,7 @@
     const InvalidApiRouteError = require('./src/Errors/invalidApiRouteError');
     const AuthenticationRoute = require('./src/Routers/auth.route');
     const UsersRoute = require('./src/Routers/user.route');
+    const ProductRoute = require('./src/Routers/product.route');
 
     // initialize express API
     const app = express();
@@ -22,7 +23,8 @@
 
     app.use(`/api/v${version}/auth`, AuthenticationRoute);
     app.use(`/api/v${version}/users`, UsersRoute);
-   
+    app.use(`/api/v${version}/products`, ProductRoute);
+
     // API handle wrong routes
     app.all('/{*splat}', (req, res) => {
         throw new InvalidApiRouteError('Invalid API Route');
@@ -31,7 +33,7 @@
     // API handle wrong routes plus Error handler
     app.use((err, req, res, next) => {
         // TODO: Replace with Custom Logger
-        console.error(error);
+        console.error(err);
         if (err instanceof InvalidApiRouteError) {
             res.status(404).json({});
         } else {
