@@ -4,10 +4,11 @@
     // load modules
     const express = require('express');
     const UserService = require('../Services/userService');
-    const UserEntity = require('../Entities/user');
 
     const AuthenticationMiddleware = require('../Middlewares/authentication.middleware');
     const IsAuthorizedUserSallerRule = require('../Middlewares/isAuthorizedUserSallerRule.middleware');
+    const isAuthorizedUserSallerRuleOrSameRequestedUser =
+        require('../Middlewares/isAuthorizedUserSallerRuleOrSameRequestedUser.middleware');
 
     const NotFoundUserError = require('../Errors/notFoundUserError');
     const StringUtls = require('../Utils/StringUtls');
@@ -16,10 +17,10 @@
     const router = express.Router();
 
     // define possible routes
-    router.get('/', (req, res) => {
-        // In case GetAll method that Can everyOne access this Route So Useless Authentication
+    router.get('/', AuthenticationMiddleware, IsAuthorizedUserSallerRule, (req, res) => {
+        // This Route Must not be Open For all Autherized Users Just Saller Users (act as Admin)
         UserService
-            .getAll({}, 0, 100,
+            .getAll(
                 (users) => {
                     res.status(200);
                     res.json({Users: users});
@@ -28,10 +29,12 @@
                     // TODO: Replace with Custom Logger
                     console.error(error);
                     throw error;
-                });
+                }
+            );
     });
 
-    router.get('/:userId', AuthenticationMiddleware, IsAuthorizedUserSallerRule, (req, res) => {
+    router.get('/:userId', AuthenticationMiddleware,
+            isAuthorizedUserSallerRuleOrSameRequestedUser, (req, res) => {
         // TODO: Make Validator class for Given User ID to reduce duplication
         const requestUserId = Number(req.params.userId);
 
@@ -59,7 +62,12 @@
             );
     });
 
-    router.post('/', AuthenticationMiddleware, IsAuthorizedUserSallerRule, (req, res) => {
+    /**
+     * **Thinking Opinion**
+     * Skip this Route and Implement the same Functionality Under Auth/Register Route
+     * especially We Cann Access this Route without Credentials.
+     */
+    router.post('/', (req, res) => {
         // TODO: Make Validator class for Given User Data to reduce duplication
         const {username, password, deposit, rule} = req.body;
 
@@ -101,7 +109,8 @@
             );
     });
 
-    router.put('/edit/:userId', AuthenticationMiddleware, IsAuthorizedUserSallerRule, (req, res) => {
+    router.put('/edit/:userId', AuthenticationMiddleware,
+            isAuthorizedUserSallerRuleOrSameRequestedUser, (req, res) => {
         // TODO: Make Validator class for Given User ID to reduce duplication
         const requestUserId = Number(req.params.userId);
 
@@ -137,7 +146,7 @@
                 updateUserObject,
                 (result) => {
                     if (!result) {
-                        res.status(400).json({message: 'Uodate User Process Faild'});
+                        res.status(400).json({message: 'Update User Process Faild'});
                         return;
                     }
 
@@ -155,7 +164,8 @@
             );
     });
 
-    router.delete('/remove/:userId', AuthenticationMiddleware, IsAuthorizedUserSallerRule, (req, res) => {
+    router.delete('/remove/:userId', AuthenticationMiddleware,
+            isAuthorizedUserSallerRuleOrSameRequestedUser, (req, res) => {
         // TODO: Make Validator class for Given User ID to reduce duplication
         const requestUserId = Number(req.params.userId);
 
