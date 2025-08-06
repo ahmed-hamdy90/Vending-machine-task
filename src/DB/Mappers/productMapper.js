@@ -18,7 +18,11 @@
                 return null;
             }
 
-            // TODO: Make calls for MongoDB to getting the full User's details.
+            /**
+             * TODO:
+             *  - Solution #1: Make calls for MongoDB to getting the full User's details.
+             *  - Solution #2: Replace Product's Document Schema to store User's ID and name (Rule not save only if Saller)
+             */
             const sallerEntity =
                 new UserEntity(data.sallerId, '', 0, AvailbleUserRule.SALLER);
 
