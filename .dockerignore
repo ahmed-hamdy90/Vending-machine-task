@@ -9,3 +9,6 @@ README.md
 # Custom files
 quickTestCode.js
 aiGeneratedCodeForAuth.js
+
+# Custom Config
+Config/config.locally.json
